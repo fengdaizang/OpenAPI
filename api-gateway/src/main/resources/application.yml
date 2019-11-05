@@ -1,0 +1,24 @@
+server:
+  port: 7001
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://120.78.121.110:7001/eureka/,http://http://120.78.121.110:7002/eureka/,http://http://120.78.121.110:7003/eureka/
+
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      routes:
+      - id: user-service-gateway
+        url:
+        predicates: http://127.0.0.1:9091
+        - path=/user/**
+
+
+auth:
+  gateway:
+    white-list:
+    - /login
