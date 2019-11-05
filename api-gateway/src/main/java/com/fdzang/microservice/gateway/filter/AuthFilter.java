@@ -5,7 +5,6 @@ import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -34,10 +33,10 @@ import java.util.TreeMap;
  */
 @Slf4j
 @Component
-@ConfigurationProperties("auth.gateway.whiteList")
+@ConfigurationProperties(prefix = "auth.gateway.white")
 public class AuthFilter implements GatewayFilter, Ordered {
 
-    private String[] whiteList;
+    private String[] white;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -46,7 +45,7 @@ public class AuthFilter implements GatewayFilter, Ordered {
         ServerHttpRequest request = exchange.getRequest();
 
         //跳过白名单
-        if(null != whiteList && Arrays.asList(whiteList).contains(url)){
+        if(null != white && Arrays.asList(white).contains(url)){
             return chain.filter(exchange);
         }
 

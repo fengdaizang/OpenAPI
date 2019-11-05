@@ -26,7 +26,7 @@ public class Demo {
     private final static String BaseURL = "127.0.0.1:7000";
 
     @Test
-    public void get_history_location() throws Exception {
+    public void testGet() throws Exception {
         //请求path
         String path = "/v1/base/truck/history_location";
 
@@ -38,7 +38,7 @@ public class Demo {
         request.setHeaders(headers);
 
         for (Map.Entry<String,String> entry:headers.entrySet()) {
-            System.out.println(entry.getKey()+entry.getValue());
+            System.out.println("header:key: "+entry.getKey()+"header:values: "+entry.getValue());
         }
 
         //请求的query
@@ -56,47 +56,12 @@ public class Demo {
     }
 
     /**
-     * HTTP GET
-     *
-     * @throws Exception
-     */
-    @Test
-    public void get_current_location() throws Exception {
-        //请求path
-        String path = "/v1/base/truck/current_location";
-
-        Map<String, String> headers = new HashMap<String, String>();
-        //（必填）根据期望的Response内容类型设置
-//        headers.put(HttpHeader.HTTP_HEADER_ACCEPT, "application/json");
-//        headers.put("X-G7-Ca-a-header1", "header1Value");
-//        headers.put("X-G7-Ca-b-header2", "header2Value");
-        headers.put(HttpHeader.HTTP_HEADER_G7_TIMESTAMP, "" + System.currentTimeMillis());
-
-
-        Request request = new Request(Method.GET, HttpSchema.HTTP + BaseURL, path, ACCESS_ID, SECRET_KEY, Constants.DEFAULT_TIMEOUT);
-        request.setHeaders(headers);
-
-
-        //请求的query
-        Map<String, String> querys = new HashMap<String, String>();
-        querys.put("plate_num", "部A11110");
-//        querys.put("from", "2017-11-25 00:00:00");
-//        querys.put("to", "2017-11-30 00:00:00");
-        request.setQueries(querys);
-
-        //调用服务端
-        Response response = Client.execute(request);
-
-        log.info(response.getBody());
-    }
-
-    /**
      * HTTP POST 字符串
      *
      * @throws Exception
      */
     @Test
-    public void postJson() throws Exception {
+    public void testPostJson() throws Exception {
         //请求path
         String path = "/v1/factory/gsp/gps_status";
         //Body内容
@@ -107,23 +72,12 @@ public class Demo {
         Map<String, String> headers = new HashMap<String, String>();
 
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_MD5, MessageDigestUtil.base64AndMD5(body));
-        //（POST/PUT请求必选）请求Body内容格式
         headers.put(HttpHeader.HTTP_HEADER_CONTENT_TYPE, ContentType.CONTENT_TYPE_JSON);
-//        headers.put("d-header1", "header1Value");
-//        headers.put("X-G7-Ca-a-header1", "header1Value");
-//        headers.put("X-G7-Ca-b-header2", "header2Value");
         headers.put(HttpHeader.HTTP_HEADER_G7_TIMESTAMP, "" + System.currentTimeMillis());
 
 
         Request request = new Request(Method.POST_JSON, HttpSchema.HTTP + BaseURL, path, ACCESS_ID, SECRET_KEY, Constants.DEFAULT_TIMEOUT);
         request.setHeaders(headers);
-
-
-        //请求的query
-//        Map<String, String> querys = new HashMap<String, String>();
-//        querys.put("a-query1", "query1Value");
-//        querys.put("b-query2", "query2Value");
-//        request.setQueries(querys);
 
         request.setJsonStrBody(body);
 
@@ -140,7 +94,7 @@ public class Demo {
      * @throws Exception
      */
     @Test
-    public void delete() throws Exception {
+    public void testDelete() throws Exception {
         //请求path
         String path = "/v1/base/current/full_currents";
 

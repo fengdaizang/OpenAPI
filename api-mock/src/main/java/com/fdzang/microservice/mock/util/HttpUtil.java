@@ -72,6 +72,8 @@ public class HttpUtil {
 
         for (Map.Entry<String, String> e : headers.entrySet()) {
             get.addHeader(e.getKey(), MessageDigestUtil.utf8ToIso88591(e.getValue()));
+
+            System.out.println("header:key: "+e.getKey()+"header:values: "+e.getValue());
         }
 
         return convert(httpClient.execute(get));
@@ -220,11 +222,9 @@ public class HttpUtil {
             headers = new HashMap<String, String>();
         }
 
-        //headers.put(SystemHeader.X_CA_NONCE, UUID.randomUUID().toString());
-        //headers.put(SystemHeader.X_CA_KEY, appKey);
         String sign = SignUtil.sign(appSecret, method, path, headers, queries, bodies);
         LOG.info("sign:{}", sign);
-        headers.put(SystemHeader.X_CA_SIGNATURE, Constants.AUTH_PREFIX + " " + appKey + Constants.SPE2_COLON + sign);
+        headers.put(SystemHeader.X_CA_SIGNATURE, Constants.AUTH_PREFIX + Constants.SPE2_COLON + appKey + Constants.SPE2_COLON + sign);
 
         return headers;
     }

@@ -1,5 +1,5 @@
 server:
-  port: 7001
+  port: 7000
 
 eureka:
   client:
@@ -9,16 +9,8 @@ eureka:
 spring:
   application:
     name: api-gateway
-  cloud:
-    gateway:
-      routes:
-      - id: user-service-gateway
-        url:
-        predicates: http://127.0.0.1:9091
-        - path=/user/**
-
 
 auth:
   gateway:
-    white-list:
+    white:
     - /login
