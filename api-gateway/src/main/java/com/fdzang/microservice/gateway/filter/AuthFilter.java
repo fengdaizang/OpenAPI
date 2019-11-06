@@ -3,6 +3,7 @@ package com.fdzang.microservice.gateway.filter;
 import com.fdzang.microservice.common.util.Constant;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +11,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
+import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -31,10 +33,11 @@ import java.util.TreeMap;
  * @author tanghu
  * @Date: 2019/10/22 18:00
  */
+@Data
 @Slf4j
 @Component
 @ConfigurationProperties(prefix = "auth.gateway.white")
-public class AuthFilter implements GatewayFilter, Ordered {
+public class AuthFilter implements GlobalFilter, Ordered {
 
     private String[] white;
 
@@ -43,6 +46,8 @@ public class AuthFilter implements GatewayFilter, Ordered {
         String url = exchange.getRequest().getURI().getPath();
         ServerHttpResponse response = exchange.getResponse();
         ServerHttpRequest request = exchange.getRequest();
+
+        System.out.println("12222");
 
         //跳过白名单
         if(null != white && Arrays.asList(white).contains(url)){
@@ -56,7 +61,7 @@ public class AuthFilter implements GatewayFilter, Ordered {
             throw new IllegalArgumentException("bad request");
         }
 
-        List<String> headers = Splitter.on(" ").trimResults().omitEmptyStrings().splitToList(authorizationHeader);
+        List<String> headers = Splitter.on(":").trimResults().omitEmptyStrings().splitToList(authorizationHeader);
         if(CollectionUtils.isEmpty(headers) || headers.size() != 3 || !Constant.Gateway.AUTH_LABLE.equals(headers.get(0))){
             throw new IllegalArgumentException("bad request");
         }
@@ -173,6 +178,6 @@ public class AuthFilter implements GatewayFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return -2;
+        return -999;
     }
 }
