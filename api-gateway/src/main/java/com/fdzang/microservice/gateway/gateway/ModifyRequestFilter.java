@@ -42,7 +42,9 @@ public class ModifyRequestFilter implements GlobalFilter, Ordered {
         String serviceName = exchange.getAttribute(Constant.SERVICE_NAME);
 
         List<String> strings = Splitter.on("/").omitEmptyStrings().trimResults().limit(3).splitToList(url);
-        String newServletPath = "http://" + serviceName + "/" + strings.get(2);
+        String newServletPath = "/" + strings.get(2);
+
+        ServerHttpRequest newRequest = request.mutate().path(newServletPath).build();
 
         //修改请求体
         Route route = exchange.getAttribute(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR);
@@ -51,11 +53,11 @@ public class ModifyRequestFilter implements GlobalFilter, Ordered {
                 .filters(route.getFilters())
                 .id(route.getId())
                 .order(route.getOrder())
-                .uri(newServletPath).build();
+                .uri("lb://"+serviceName).build();
 
         exchange.getAttributes().put(ServerWebExchangeUtils.GATEWAY_ROUTE_ATTR,newRoute);
 
-        return chain.filter(exchange);
+        return chain.filter(exchange.mutate().request(newRequest).build());
     }
 
     @Override
