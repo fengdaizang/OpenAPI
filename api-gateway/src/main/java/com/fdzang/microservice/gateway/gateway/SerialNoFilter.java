@@ -1,12 +1,14 @@
-package com.fdzang.microservice.gateway.filter;
+package com.fdzang.microservice.gateway.gateway;
 
 import com.fdzang.microservice.gateway.util.Constant;
 import com.fdzang.microservice.gateway.util.IdWorker;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
 
@@ -15,6 +17,8 @@ import reactor.core.publisher.Mono;
  * @author tanghu
  * @Date: 2019/11/5 18:42
  */
+@Slf4j
+@Component
 public class SerialNoFilter implements GlobalFilter, Ordered {
 
     @Override
@@ -23,8 +27,13 @@ public class SerialNoFilter implements GlobalFilter, Ordered {
 
         String requestId= request.getHeaders().getFirst(Constant.REQUEST_TRACE_ID);
         if (StringUtils.isEmpty(requestId)) {
-            requestId = String.valueOf(IdWorker.getWorkerId());
-            request.getHeaders().add(Constant.REQUEST_TRACE_ID, requestId);
+            Object attribute = exchange.getAttribute(Constant.REQUEST_TRACE_ID);
+            if (attribute == null) {
+                requestId = String.valueOf(IdWorker.getWorkerId());
+                exchange.getAttributes().put(Constant.REQUEST_TRACE_ID,requestId);
+            }
+        }else{
+            exchange.getAttributes().put(Constant.REQUEST_TRACE_ID,requestId);
         }
 
         return chain.filter(exchange);

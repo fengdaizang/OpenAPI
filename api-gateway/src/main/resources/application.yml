@@ -4,29 +4,24 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://120.78.121.110:7001/eureka/,http://http://120.78.121.110:7002/eureka/,http://http://120.78.121.110:7003/eureka/
+      defaultZone: http://127.0.0.1:7003/eureka/
+      #      defaultZone: http://120.78.121.110:7001/eureka/,http://http://120.78.121.110:7002/eureka/,http://http://120.78.121.110:7003/eureka/
 
 spring:
   application:
     name: api-gateway
   cloud:
     gateway:
-      routes:
-        #id唯一标识，可自定义
-        - id: user-service-route
-          #路由的服务地址
-          #lb协议表示从Eureka注册中心获取服务请求地址
-          #user-provider访问的服务名称。
-          #路由地址如果通过lb协议加服务名称时，会自动使用负载均衡访问对应服务
-          uri: https://www.baidu.com
-          # 路由断言：路由拦截规则
-          predicates:
-            - Path=/**
+      discovery:
+        locator:
+          enabled: true
+
 
 auth:
+  service-id: api-auth-v1
   gateway:
     white:
-    - /login
+      - /login
 
 
 IdWorker:

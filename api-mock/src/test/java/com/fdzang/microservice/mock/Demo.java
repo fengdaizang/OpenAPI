@@ -28,7 +28,7 @@ public class Demo {
     @Test
     public void testGet() throws Exception {
         //请求path
-        String path = "/v2/base/truck/history_location";
+        String path = "/v2/base/zuul/article/getMostCommentArticles";
 
         Map<String, String> headers = new HashMap<String, String>();
         headers.put(HttpHeader.HTTP_HEADER_G7_TIMESTAMP, "" + System.currentTimeMillis());

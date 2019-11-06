@@ -13,6 +13,7 @@
         <module>api-common</module>
         <module>api-gateway</module>
         <module>api-mock</module>
+        <module>api-auth</module>
     </modules>
 
     <properties>
