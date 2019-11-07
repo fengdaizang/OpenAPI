@@ -4,7 +4,7 @@ import com.fdzang.microservice.common.entity.auth.AuthCode;
 import com.fdzang.microservice.common.entity.auth.AuthRequest;
 import com.fdzang.microservice.common.entity.auth.AuthResult;
 import com.fdzang.microservice.gateway.service.AuthService;
-import com.fdzang.microservice.gateway.util.Constant;
+import com.fdzang.microservice.gateway.util.GatewayConstant;
 import com.fdzang.microservice.gateway.util.WhiteUrl;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
@@ -42,7 +42,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String requestId = exchange.getAttribute(Constant.REQUEST_TRACE_ID);
+        String requestId = exchange.getAttribute(GatewayConstant.REQUEST_TRACE_ID);
         String url = exchange.getRequest().getURI().getPath();
 
         ServerHttpRequest request = exchange.getRequest();
@@ -54,7 +54,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
         //获取权限校验部分
         //Authorization: gateway:{AccessId}:{Signature}
-        String authHeader = exchange.getRequest().getHeaders().getFirst(Constant.AUTH_HEADER);
+        String authHeader = exchange.getRequest().getHeaders().getFirst(GatewayConstant.AUTH_HEADER);
         if(StringUtils.isBlank(authHeader)){
             log.warn("request has no authorization header, uuid:{}, request:{}",requestId, url);
 
@@ -62,7 +62,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
 
         List<String> auths = Splitter.on(":").trimResults().omitEmptyStrings().splitToList(authHeader);
-        if(CollectionUtils.isEmpty(auths) || auths.size() != 3 || !Constant.AUTH_LABLE.equals(auths.get(0))){
+        if(CollectionUtils.isEmpty(auths) || auths.size() != 3 || !GatewayConstant.AUTH_LABLE.equals(auths.get(0))){
             log.warn("bad authorization header, uuid:{}, request:[{}], header:{}",
                     requestId, url, authHeader);
 
@@ -70,7 +70,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         }
 
         //校验时间戳是否合法
-        String timestamp = exchange.getRequest().getHeaders().getFirst(Constant.TIMESTAMP_HEADER);
+        String timestamp = exchange.getRequest().getHeaders().getFirst(GatewayConstant.TIMESTAMP_HEADER);
         if (StringUtils.isBlank(timestamp) || isTimestampExpired(timestamp)) {
             log.warn("wrong timestamp:{}, uuid:{}, request:{}",
                     timestamp, requestId, url);
@@ -101,22 +101,24 @@ public class AuthFilter implements GlobalFilter, Ordered {
                 authResult.getUsername(), accessId,
                 url, authResult.getServiceName());
 
-        exchange.getAttributes().put(Constant.ORG_CODE_HEADER,authResult.getOrgCode());
-        exchange.getAttributes().put(Constant.ACCESSID_HEADER,accessId);
-        exchange.getAttributes().put(Constant.DEV_ACCOUNT,authResult.getUsername());
-        exchange.getAttributes().put(Constant.SERVICE_NAME,authResult.getServiceName());
+        exchange.getAttributes().put(GatewayConstant.SERVICE_NAME,authResult.getServiceName());
 
         return chain.filter(exchange);
     }
 
-
+    /**
+     * 获取原始字符串（签名前）
+     * @param request
+     * @param timestamp
+     * @return
+     */
     private String getStringToSign(ServerHttpRequest request, String timestamp){
         // headers
         TreeMap<String, String> headersInSign = new TreeMap<>();
         HttpHeaders headers = request.getHeaders();
         for (Map.Entry<String,List<String>> header:headers.entrySet()) {
             String key = header.getKey();
-            if (key.startsWith(Constant.AUTH_HEADER_PREFIX)) {
+            if (key.startsWith(GatewayConstant.AUTH_HEADER_PREFIX)) {
                 headersInSign.put(key, header.getValue().get(0));
             }
         }
@@ -160,7 +162,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
         String contentType = headers.getFirst(HttpHeaders.CONTENT_TYPE);
 
         //这里可以对请求参数进行MD5校验，暂时不做
-        String contentMd5 = headers.getFirst(Constant.CONTENTE_MD5);
+        String contentMd5 = headers.getFirst(GatewayConstant.CONTENTE_MD5);
 
         String[] parts = {
                 request.getMethodValue(),
@@ -171,20 +173,25 @@ public class AuthFilter implements GlobalFilter, Ordered {
                 uriString
         };
 
-        return Joiner.on(Constant.STRING_TO_SIGN_DELIM).skipNulls().join(parts);
+        return Joiner.on(GatewayConstant.STRING_TO_SIGN_DELIM).skipNulls().join(parts);
     }
 
+    /**
+     * 校验时间戳是否超时
+     * @param timestamp
+     * @return
+     */
     private boolean isTimestampExpired(String timestamp){
         long l = NumberUtils.toLong(timestamp, 0L);
         if (l == 0) {
             return true;
         }
 
-        return Math.abs(System.currentTimeMillis() - l) > Constant.EXPIRE_TIME_SECONDS *1000;
+        return Math.abs(System.currentTimeMillis() - l) > GatewayConstant.EXPIRE_TIME_SECONDS *1000;
     }
 
     @Override
     public int getOrder() {
-        return Constant.Order.AUTH_ORDER;
+        return GatewayConstant.Order.AUTH_ORDER;
     }
 }

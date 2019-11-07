@@ -15,7 +15,11 @@ spring:
       discovery:
         locator:
           enabled: true
-
+      routes:
+        - id: gateway
+          uri: http://www.baidu.com
+          predicates:
+            - Path=/**
 
 auth:
   service-id: api-auth-v1

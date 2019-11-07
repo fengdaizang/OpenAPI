@@ -28,7 +28,7 @@ public class Demo {
     @Test
     public void testGet() throws Exception {
         //请求path
-        String path = "/v2/base/zuul/article/getMostCommentArticles";
+        String path = "/v2/base/zuul/tag/getMostUsedTags";
 
         Map<String, String> headers = new HashMap<String, String>();
         headers.put(HttpHeader.HTTP_HEADER_G7_TIMESTAMP, "" + System.currentTimeMillis());
@@ -36,10 +36,6 @@ public class Demo {
 
         Request request = new Request(Method.GET, HttpSchema.HTTP + BaseURL, path, ACCESS_ID, SECRET_KEY, Constants.DEFAULT_TIMEOUT);
         request.setHeaders(headers);
-
-        for (Map.Entry<String,String> entry:headers.entrySet()) {
-            System.out.println("header:key: "+entry.getKey()+"header:values: "+entry.getValue());
-        }
 
         //请求的query
         Map<String, String> querys = new HashMap<>();

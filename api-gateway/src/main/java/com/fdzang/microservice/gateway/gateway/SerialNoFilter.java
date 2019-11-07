@@ -1,6 +1,6 @@
 package com.fdzang.microservice.gateway.gateway;
 
-import com.fdzang.microservice.gateway.util.Constant;
+import com.fdzang.microservice.gateway.util.GatewayConstant;
 import com.fdzang.microservice.gateway.util.IdWorker;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
@@ -25,15 +25,15 @@ public class SerialNoFilter implements GlobalFilter, Ordered {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
 
-        String requestId= request.getHeaders().getFirst(Constant.REQUEST_TRACE_ID);
+        String requestId= request.getHeaders().getFirst(GatewayConstant.REQUEST_TRACE_ID);
         if (StringUtils.isEmpty(requestId)) {
-            Object attribute = exchange.getAttribute(Constant.REQUEST_TRACE_ID);
+            Object attribute = exchange.getAttribute(GatewayConstant.REQUEST_TRACE_ID);
             if (attribute == null) {
                 requestId = String.valueOf(IdWorker.getWorkerId());
-                exchange.getAttributes().put(Constant.REQUEST_TRACE_ID,requestId);
+                exchange.getAttributes().put(GatewayConstant.REQUEST_TRACE_ID,requestId);
             }
         }else{
-            exchange.getAttributes().put(Constant.REQUEST_TRACE_ID,requestId);
+            exchange.getAttributes().put(GatewayConstant.REQUEST_TRACE_ID,requestId);
         }
 
         return chain.filter(exchange);
@@ -41,6 +41,6 @@ public class SerialNoFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return Constant.Order.SERIAL_NO_ORDER;
+        return GatewayConstant.Order.SERIAL_NO_ORDER;
     }
 }

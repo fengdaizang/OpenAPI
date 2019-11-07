@@ -72,11 +72,7 @@ public class HttpUtil {
 
         for (Map.Entry<String, String> e : headers.entrySet()) {
             get.addHeader(e.getKey(), MessageDigestUtil.utf8ToIso88591(e.getValue()));
-
-            System.out.println("header:key: "+e.getKey()+"header:values: "+e.getValue());
         }
-
-        System.out.println(host+" "+path);
 
         return convert(httpClient.execute(get));
     }

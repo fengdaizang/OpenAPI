@@ -18,9 +18,7 @@ public class GatewayConfig {
     public RouteLocator addRoute(RouteLocatorBuilder builder){
         return builder.routes()
                 .route("test1",
-                        r->r.path("/v2/**").uri("https://www.baidu.com"))
-                .route("test2",
-                        r->r.path("/api-test-v1/**").uri("https://www.sina.com"))
+                        r->r.path("/**").uri("https://www.baidu.com"))
                 .build();
     }
 
