@@ -90,7 +90,7 @@ public class AuthFilter implements GlobalFilter, Ordered {
 
         AuthResult authResult = authService.auth(authRequest);
 
-        if (authResult.getStatus() != AuthCode.SUCEESS.getAuthCode()) {
+        if (authResult.getStatus() != AuthCode.SUCEESS.getCode()) {
             log.warn("checkSign failed, uuid:{},  accessId:{}, request:[{}], error:{}",
                     requestId, accessId, url, authResult.getDescription());
             throw new RuntimeException(authResult.getDescription());

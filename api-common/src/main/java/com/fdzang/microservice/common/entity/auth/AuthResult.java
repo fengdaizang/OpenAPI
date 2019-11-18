@@ -8,7 +8,7 @@ import lombok.Data;
  */
 @Data
 public class AuthResult {
-    private int status;
+    private long status;
     private String description;
     private String orgCode;
     private String serviceName;

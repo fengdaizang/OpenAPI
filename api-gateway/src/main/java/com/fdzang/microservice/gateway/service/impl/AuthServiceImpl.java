@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
         //AuthResult authResult =authClient.auth(request);
         AuthResult authResult = new AuthResult();
 
-        authResult.setStatus(AuthCode.SUCEESS.getAuthCode());
+        authResult.setStatus(AuthCode.SUCEESS.getCode());
         authResult.setDescription("test");
         authResult.setOrgCode("9900");
         authResult.setServiceName("blog-article-v1");
