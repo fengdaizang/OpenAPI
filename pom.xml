@@ -14,6 +14,7 @@
         <module>api-gateway</module>
         <module>api-mock</module>
         <module>api-auth</module>
+        <module>api-ucenter</module>
     </modules>
 
     <properties>
@@ -24,6 +25,7 @@
         <spring.boot.version>2.1.9.RELEASE</spring.boot.version>
         <spring.cloud.version>Greenwich.SR2</spring.cloud.version>
         <spring.cloud.starter.version>2.1.3.RELEASE</spring.cloud.starter.version>
+        <spring.mybatis.version>2.1.0</spring.mybatis.version>
 
         <lombok.version>1.18.8</lombok.version>
         <guava.version>28.0-jre</guava.version>
@@ -32,6 +34,7 @@
         <commons-io.version>2.4</commons-io.version>
         <commons-codec.version>1.10</commons-codec.version>
         <commons-lang3.version>3.8.1</commons-lang3.version>
+        <mysql.connector.java.version>5.1.48</mysql.connector.java.version>
 
         <fastjson.version>1.2.50</fastjson.version>
         <httpcomponents.version>4.2.1</httpcomponents.version>
