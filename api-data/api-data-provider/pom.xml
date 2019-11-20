@@ -3,13 +3,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>api-ucenter</artifactId>
+        <artifactId>api-data</artifactId>
         <groupId>com.fdzang.microservice</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>api-ucenter-provider</artifactId>
+    <artifactId>api-data-provider</artifactId>
 
     <dependencies>
 
@@ -21,13 +21,13 @@
 
         <dependency>
             <groupId>com.fdzang.microservice</groupId>
-            <artifactId>api-ucenter-common</artifactId>
+            <artifactId>api-data-common</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
         <dependency>
             <groupId>com.fdzang.microservice</groupId>
-            <artifactId>api-ucenter-dao</artifactId>
+            <artifactId>api-data-dao</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 

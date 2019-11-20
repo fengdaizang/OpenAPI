@@ -2,7 +2,7 @@ package com.fdzang.microservice.ucenter.api.service;
 
 /**
  * @author tanghu
- * @Date: 2019/11/19 18:06
+ * @Date: 2019/11/20 16:36
  */
-public class ApiService {
+public class UserModuleService {
 }

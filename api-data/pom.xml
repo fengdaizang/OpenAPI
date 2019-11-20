@@ -9,13 +9,13 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>api-ucenter</artifactId>
+    <artifactId>api-data</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>api-ucenter-dao</module>
-        <module>api-ucenter-common</module>
-        <module>api-ucenter-provider</module>
-        <module>api-ucenter-feign</module>
+        <module>api-data-dao</module>
+        <module>api-data-common</module>
+        <module>api-data-provider</module>
+        <module>api-data-feign</module>
     </modules>
 
 

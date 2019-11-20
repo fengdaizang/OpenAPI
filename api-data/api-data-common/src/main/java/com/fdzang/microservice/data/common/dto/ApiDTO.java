@@ -1,4 +1,4 @@
-package com.fdzang.microservice.ucenter.common.dto;
+package com.fdzang.microservice.data.common.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * @author tanghu
- * @Date: 2019/11/18 18:54
+ * @Date: 2019/11/20 16:17
  */
 @Data
 public class ApiDTO {
