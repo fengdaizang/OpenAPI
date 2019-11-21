@@ -20,6 +20,24 @@
 
         <dependency>
             <groupId>com.fdzang.microservice</groupId>
+            <artifactId>api-data-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fdzang.microservice</groupId>
+            <artifactId>api-ucenter-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fdzang.microservice</groupId>
+            <artifactId>api-data-feign</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fdzang.microservice</groupId>
             <artifactId>api-ucenter-feign</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>

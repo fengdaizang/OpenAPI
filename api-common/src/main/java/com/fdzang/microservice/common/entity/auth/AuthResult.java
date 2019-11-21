@@ -10,7 +10,7 @@ import lombok.Data;
 public class AuthResult {
     private long status;
     private String description;
-    private String orgCode;
+    private String userCode;
     private String serviceName;
     private String username;
 }

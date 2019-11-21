@@ -7,28 +7,30 @@ import java.util.Date;
 
 /**
  * @author tanghu
- * @Date: 2019/11/18 18:54
+ * @Date: 2019/11/21 9:55
  */
 @Data
-public class ApiDTO {
+public class UserModuleDTO {
     private Integer id;
 
-    private String name;
+    private Integer userId;
 
-    private String description;
+    private Integer moduleId;
 
-    private String url;
+    private String accessId;
 
-    private String method;
-
-    private String serviceName;
+    private String secret;
 
     private Integer status;
 
-    private Integer writer;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date applyTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
-    private Date createTime;
+    private Date auditTime;
+
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
+    private Date expireTime;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone="GMT+8")
     private Date updateTime;

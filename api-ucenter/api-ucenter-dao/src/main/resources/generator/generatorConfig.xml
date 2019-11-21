@@ -60,9 +60,9 @@
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
-        <table tableName="api"
-               domainObjectName="ApiDO"
-               mapperName="ApiMapper"
+        <table tableName="user"
+               domainObjectName="UserDO"
+               mapperName="UserMapper"
                enableInsert="true"
                enableUpdateByPrimaryKey="true"
                enableDeleteByPrimaryKey="true"
@@ -71,7 +71,24 @@
                enableDeleteByExample="false"
                enableSelectByExample="true"
                selectByExampleQueryId="false">
-            <property name="useActualColumnNames" value="false" />
+            <property name="useActualColumnNames" value="true" />
+
+            <!--使用生成的自增长id-->
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+
+        <table tableName="user_module"
+               domainObjectName="UserModuleDO"
+               mapperName="UserModuleMapper"
+               enableInsert="true"
+               enableUpdateByPrimaryKey="true"
+               enableDeleteByPrimaryKey="true"
+               enableCountByExample="false"
+               enableUpdateByExample="false"
+               enableDeleteByExample="false"
+               enableSelectByExample="true"
+               selectByExampleQueryId="false">
+            <property name="useActualColumnNames" value="true" />
 
             <!--使用生成的自增长id-->
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
