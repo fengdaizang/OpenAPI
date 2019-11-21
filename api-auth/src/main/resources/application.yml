@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: altair-auth-v2
+  profiles:
+    active: local
+  cache:
+    jcache:
+      config: classpath:ehcache.xml
+
+#global ribbon config
+ribbon:
+  ConnectTimeout: 3000
+  ReadTimeout: 5000
+  OkToRetryOnAllOperations: true
+  MaxAutoRetries: 1           # 每个服务重试1次
+  MaxAutoRetriesNextServer: 2 # 最多重试两个服务
+
+feign:
+  hystrix:
+    enabled: true
+    
+eureka:
+  client:
+    registry-fetch-interval-seconds: 10 # 每10s获取一次service信息
+  instance:
+    prefer-ip-address: true
+
+# hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000 #缺省为2000
+  threadpool:
+    default:
+      coreSize: 200 #缺省为10
+    altair-configuration:
+      coreSize: ${server.tomcat.max-threads}  # conf服务的hystrix线程池至少和tomcat线程数一致
+
+server:
+  tomcat:
+    max-threads: 500
+    min-spare-threads: 50

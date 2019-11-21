@@ -1,0 +1,23 @@
+server:
+  port: 15566
+spring:
+  output:
+      ansi:
+        enabled: detect
+
+  #redis configuration
+  redis:
+    database: 5
+    host: localhost
+    port: 6379
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.22.32.220:1111/eureka/
+
+security:
+  auth2:
+    access_token:
+      validity_seconds: 7200
+      

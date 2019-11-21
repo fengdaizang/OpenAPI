@@ -1,0 +1,29 @@
+server:
+  port: 15566
+spring:
+  output:
+      ansi:
+        enabled: detect
+
+  #redis configuration
+  redis:
+    host: 172.16.2.136
+    port: 6379
+    password: 85bd3f55e48e4652a83d40a7f9094185
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 10
+        max-wait: -1s
+      timeout: 15000
+    database: 5
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.16.2.136:1111/eureka/
+
+security:
+  auth2:
+    access_token:
+      validity_seconds: 7200

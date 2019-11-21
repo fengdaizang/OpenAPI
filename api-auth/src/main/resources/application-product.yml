@@ -1,0 +1,24 @@
+server:
+  port: 15566
+spring:
+  output:
+      ansi:
+        enabled: detect
+
+  #redis configuration
+  redis:
+    host: r-bp1369707a52a6d4.redis.rds.aliyuncs.com
+    port: 6379
+    password: kAogudUbj16j
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 10
+        max-wait: -1s
+      timeout: 15000
+    database: 5
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka:HT2A605@172.16.24.64:1111/eureka/,http://eureka:HT2A605@172.16.24.65:1111/eureka/
